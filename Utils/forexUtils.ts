@@ -4,7 +4,7 @@ import { APIRequestContext } from '@playwright/test';
 export async function getForexRates(request: APIRequestContext, baseurl: string, exchange_currency: string, weeks: string) {
     const response = await request.get(`${baseurl}/${exchange_currency}/json?recent_weeks=${weeks}`);
     if (!response.ok()) {
-        throw new Error(`Failed to fetch data: ${response.status()}`);
+        return response.status();
     }
     return await response.json();
 }
