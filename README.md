@@ -18,8 +18,8 @@ This is an API automation framework built using **Playwright** with **TypeScript
 ## Installation
 1. Clone the repository:
    ```sh
-   git clone <repo_url>
-   cd <repo_folder>
+   git clone https://github.com/Dharmik6898/BankOfCanada_Test.git
+   cd BankOfCanada_Test
    ```
 2. Install dependencies:
    ```sh
