@@ -1,7 +1,7 @@
 # BankOfCanada API Automation Framework
 
 ## Overview
-This is an API automation framework built using **Playwright** with **TypeScript** to test the Bank of Canada Valet API. It includes functional tests for fetching foreign exchange (Forex) rates and validates response integrity, error handling, and performance.
+This is an API automation framework built using **Playwright** with **TypeScript** to test the Bank of Canada Valet API. It includes functional tests for fetching foreign exchange rates and validates responses.
 
 ## Features
 - Forex conversion rate, "CAD to USD," for the recent 10 weeks using observations by Series.
