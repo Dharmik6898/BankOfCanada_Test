@@ -40,4 +40,47 @@ test.describe('Bank of Canada Test', () => {
         }
     });
 
+    test('Validate null recent weeks parameter', async ({ request }) => {
+        const response = await getForexRates(request, BASE_URL!, EXCHANGE_CURRENCY, "null");
+        expect(response).toBe(400);
+    });
+
+    test('Validate negative recent weeks value', async ({ request }) => {
+        const response = await getForexRates(request, BASE_URL!, EXCHANGE_CURRENCY, "-5");
+        expect(response).toBe(400);
+    });
+
+    //BUG: This large number of weeks return an empty array.
+    test('Validate large number recent weeks value', async ({ request }) => {
+        const data = await getForexRates(request, BASE_URL!, EXCHANGE_CURRENCY, "10000000000000000");
+        expect(data.observations).toHaveLength(0);
+    });
+
+    //Performance Test
+
+    test('Validate API response time is within 1 seconds', async ({ request }) => {
+        const startTime = Date.now();
+        const data = await getForexRates(request, BASE_URL!, EXCHANGE_CURRENCY, RECENT_WEEKS);
+        const endTime = Date.now();
+        const responseTime = endTime - startTime;
+
+        console.log(`Response Time: ${responseTime} ms`);
+        expect(responseTime).toBeLessThan(1000); // 2 seconds
+    });
+
+    //If we have set a limit for number of calls in short time, this test would fail.
+    test('Check if API calls has rate limiting', async ({ request }) => {
+        const maxRequests = 50;
+        let LimitExceeded = false;
+        for (let i = 0; i < maxRequests; i++) {
+            const response = await request.get(`${BASE_URL}/${EXCHANGE_CURRENCY}/json?recent_weeks=${RECENT_WEEKS}`);
+            // 429 Too Many Requests
+            if (response.status() === 429) {
+                LimitExceeded = true;
+                break;
+            }
+        }
+        expect(LimitExceeded).toBe(false); 
+    });
+
 })
