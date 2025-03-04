@@ -13,6 +13,7 @@
     "jest": "^29.7.0"
   },
   "dependencies": {
-    "allure-playwright": "^3.2.0"
+    "allure-playwright": "^3.2.0",
+    "dotenv": "^16.4.7"
   }
 }
